@@ -86,7 +86,7 @@ By using the contract address from your deployment step above and your wallet, y
 To run the example, set the following env vars or place them in a `.env` file this project, then:
 
 ```
-STYLUS_contract_ADDRESS=<the onchain address of your deployed contract>
+STYLUS_CONTRACT_ADDRESS=<the onchain address of your deployed contract>
 PRIV_KEY_PATH=<the file path for your priv key to transact with>
 RPC_URL=https://sepolia-rollup.arbitrum.io/rpc
 USER_ADDRESS=<the address of the user you want to interact with>
