@@ -63,7 +63,7 @@ interface VendingMachine {
 
 ## Deploying
 
-You can use the cargo stylus command to deploy your contract to the Stylus-enabled Arbitrum Sepolia testnet. First, we can use the tool to check if our contract compiles to valid WASM for Stylus and verify that the deployment will succeed without submitting a transaction. By default, this will use the Arbitrum Sepolia testnet public RPC endpoint.  See [here](https://docs.arbitrum.io/stylus/reference/testnet-information) for more information.
+You can use the `cargo stylus` command to deploy your contract to the Stylus-enabled Arbitrum Sepolia testnet. First, we can use the tool to check if our contract compiles to valid WASM for Stylus and verify that the deployment will succeed without submitting a transaction. By default, this will use the Arbitrum Sepolia testnet public RPC endpoint.  See [here](https://docs.arbitrum.io/stylus/reference/testnet-information) for more information.
 
 ```bash
 cargo stylus check
