@@ -21,7 +21,6 @@ stylus-sdk = { version = "0.8.3", features = ["export-abi"] }
 
 [features]
 export-abi = ["stylus-sdk/export-abi"]
-testing = []
 
 [lib]
 crate-type = ["lib", "cdylib"]
