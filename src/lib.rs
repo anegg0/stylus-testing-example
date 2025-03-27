@@ -11,9 +11,9 @@
 #![cfg_attr(not(any(feature = "export-abi", feature = "testing")), no_main)]
 extern crate alloc;
 
-use alloy_primitives::{Address, Uint};
+use alloy_primitives::Uint;
 // Import items from the SDK. The prelude contains common traits and macros.
-use stylus_sdk::alloy_primitives::U256;
+use stylus_sdk::alloy_primitives::{U256, Address};
 use stylus_sdk::prelude::*;
 use stylus_sdk::{block, console};
 
@@ -85,7 +85,7 @@ mod tests {
         vm.set_block_timestamp(100);
 
         // Get a user address
-        let user = Address::from([1u8; 20]);
+        let user = Address::repeat_byte(1);
 
         // Initially, user should have 0 cupcakes
         assert_eq!(vending_machine.get_cupcake_balance_for(user), U256::ZERO);
@@ -121,8 +121,8 @@ mod tests {
         vm.set_block_timestamp(100);
 
         // Define two different users
-        let user1 = Address::from([1u8; 20]);
-        let user2 = Address::from([2u8; 20]);
+        let user1 = Address::repeat_byte(1);
+        let user2 = Address::repeat_byte(2);
 
         // Give a cupcake to user1
         assert!(vending_machine.give_cupcake_to(user1));
