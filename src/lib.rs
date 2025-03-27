@@ -8,12 +8,12 @@
 //!
 
 // Allow `cargo stylus export-abi` to generate a main function if the "export-abi" feature is enabled.
-#![cfg_attr(not(any(feature = "export-abi", feature = "testing")), no_main)]
+#![cfg_attr(not(any(feature = "export-abi")), no_main)]
 extern crate alloc;
 
 use alloy_primitives::Uint;
 // Import items from the SDK. The prelude contains common traits and macros.
-use stylus_sdk::alloy_primitives::{U256, Address};
+use stylus_sdk::alloy_primitives::{Address, U256};
 use stylus_sdk::prelude::*;
 use stylus_sdk::{block, console};
 
