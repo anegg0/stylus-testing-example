@@ -8,7 +8,7 @@
 //!
 
 // Allow `cargo stylus export-abi` to generate a main function if the "export-abi" feature is enabled.
-#![cfg_attr(not(feature = "export-abi"), no_main)]
+#![cfg_attr(not(any(feature = "export-abi", feature = "testing")), no_main)]
 extern crate alloc;
 
 use alloy_primitives::{Address, Uint};
