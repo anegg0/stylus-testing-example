@@ -1,4 +1,7 @@
-#![cfg_attr(not(any(feature = "export-abi", feature = "testing")), no_main)]
+#![cfg_attr(
+    not(any(feature = "export-abi", feature = "stylus-test", feature = "TestVM")),
+    no_main
+)]
 
 #[cfg(feature = "export-abi")]
 fn main() {
