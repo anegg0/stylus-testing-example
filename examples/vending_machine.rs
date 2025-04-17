@@ -13,7 +13,7 @@ use dotenv::dotenv;
 use std::env;
 
 /// Your private key file path.
-const PRIV_KEY_PATH: &str = "PRIV_KEY_PATH";
+const PRIVATE_KEY_PATH: &str = "PRIVATE_KEY_PATH";
 
 /// Stylus RPC endpoint url.
 const RPC_URL: &str = "RPC_URL";
@@ -28,12 +28,12 @@ async fn main() -> eyre::Result<()> {
     dotenv().ok();
 
     // Debugging: Print environment variables
-    println!("PRIV_KEY_PATH: {:?}", env::var(PRIV_KEY_PATH));
+    println!("PRIVATE_KEY_PATH: {:?}", env::var(PRIVATE_KEY_PATH));
     println!("RPC_URL: {:?}", env::var(RPC_URL));
     println!("STYLUS_CONTRACT_ADDRESS: {:?}", env::var(STYLUS_CONTRACT_ADDRESS));
     println!("USER_ADDRESS: {:?}", env::var(USER_ADDRESS));
 
-    let priv_key_path = env::var(PRIV_KEY_PATH).map_err(|_| eyre!("No {} env var set", PRIV_KEY_PATH))?;
+    let priv_key_path = env::var(PRIVATE_KEY_PATH).map_err(|_| eyre!("No {} env var set", PRIVATE_KEY_PATH))?;
     let rpc_url = env::var(RPC_URL).map_err(|_| eyre!("No {} env var set", RPC_URL))?;
     let contract_address = env::var(STYLUS_CONTRACT_ADDRESS)
         .map_err(|_| eyre!("No {} env var set", STYLUS_CONTRACT_ADDRESS))?;
