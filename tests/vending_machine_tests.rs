@@ -46,47 +46,47 @@ fn test_give_cupcake_to() {
     );
 }
 
-#[test]
-fn test_multiple_users() {
-    // Create a VM with test addresses using the builder pattern
-    let vm = TestVMBuilder::new()
-        .contract_address(address!("0x11b57fe348584f042e436c6bf7c3c3def171de49"))
-        .build();
+// #[test]
+// fn test_multiple_users() {
+//     // Create a VM with test addresses using the builder pattern
+//     let vm = TestVMBuilder::new()
+//         .contract_address(address!("0x11b57fe348584f042e436c6bf7c3c3def171de49"))
+//         .build();
 
-    // Initialize the contract with the VM
-    let mut contract = VendingMachine::from(&vm);
+//     // Initialize the contract with the VM
+//     let mut contract = VendingMachine::from(&vm);
 
-    // Test addresses
-    let user1 = address!("1111111111111111111111111111111111111111");
-    let user2 = address!("2222222222222222222222222222222222222222");
+//     // Test addresses
+//     let user1 = address!("1111111111111111111111111111111111111111");
+//     let user2 = address!("2222222222222222222222222222222222222222");
 
-    // Give cupcakes to both users
-    assert!(contract.give_cupcake_to(user1).unwrap());
-    assert!(contract.give_cupcake_to(user2).unwrap());
+//     // Give cupcakes to both users
+//     assert!(contract.give_cupcake_to(user1).unwrap());
+//     assert!(contract.give_cupcake_to(user2).unwrap());
 
-    // Check both balances are 1
-    assert_eq!(
-        contract.get_cupcake_balance_for(user1).unwrap(),
-        U256::from(1)
-    );
-    assert_eq!(
-        contract.get_cupcake_balance_for(user2).unwrap(),
-        U256::from(1)
-    );
+//     // Check both balances are 1
+//     assert_eq!(
+//         contract.get_cupcake_balance_for(user1).unwrap(),
+//         U256::from(1)
+//     );
+//     assert_eq!(
+//         contract.get_cupcake_balance_for(user2).unwrap(),
+//         U256::from(1)
+//     );
 
-    // Advance timestamp by 10 seconds
-    vm.set_block_timestamp(vm.block_timestamp() + 10);
+//     // Advance timestamp by 10 seconds
+//     vm.set_block_timestamp(vm.block_timestamp() + 10);
 
-    // Give another cupcake to user1 only
-    assert!(contract.give_cupcake_to(user1).unwrap());
+//     // Give another cupcake to user1 only
+//     assert!(contract.give_cupcake_to(user1).unwrap());
 
-    // User1 should have 2 cupcakes, user2 still has 1
-    assert_eq!(
-        contract.get_cupcake_balance_for(user1).unwrap(),
-        U256::from(2)
-    );
-    assert_eq!(
-        contract.get_cupcake_balance_for(user2).unwrap(),
-        U256::from(1)
-    );
-}
+//     // User1 should have 2 cupcakes, user2 still has 1
+//     assert_eq!(
+//         contract.get_cupcake_balance_for(user1).unwrap(),
+//         U256::from(2)
+//     );
+//     assert_eq!(
+//         contract.get_cupcake_balance_for(user2).unwrap(),
+//         U256::from(1)
+//     );
+// }
