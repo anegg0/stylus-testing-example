@@ -5,12 +5,19 @@ use stylus_testing_example::VendingMachine;
 #[test]
 fn test_give_cupcake_to() {
     // Create a new TestVM
-    let vm = TestVM::new();
+    // let vm = TestVM::default();
+    let vm: TestVM = TestVMBuilder::new()
+        .sender(address!("dCE82b5f92C98F27F116F70491a487EFFDb6a2a9"))
+        .contract_address(address!("0x11b57fe348584f042e436c6bf7c3c3def171de49"))
+        .value(U256::from(1))
+        .rpc_url("http://localhost:8547")
+        .build();
+
     // Initialize the contract with the VM
     let mut contract = VendingMachine::from(&vm);
 
     // Test address
-    let user = address!("dCE82b5f92C98F27F116F70491a487EFFDb6a2a9");
+    let user = address!("0xCDC41bff86a62716f050622325CC17a317f99404");
 
     // Check initial balance is zero
     assert_eq!(contract.get_cupcake_balance_for(user).unwrap(), U256::ZERO);
