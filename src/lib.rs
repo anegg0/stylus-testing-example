@@ -30,7 +30,7 @@ sol_storage! {
 #[public]
 impl VendingMachine {
     // Give a cupcake to the specified user if they are eligible (i.e., if at least 5 seconds have passed since their last cupcake).
-    pub fn give_cupcake_to(&mut self, user_address: Address) -> Result<bool, Vec<u8>> {
+    pub fn give_cupcake_to(&mut self, user_address: Address) -> bool {
         // Get the last distribution time for the user.
         let last_distribution = self.cupcake_distribution_times.get(user_address);
         // Calculate the earliest next time the user can receive a cupcake.
@@ -52,22 +52,24 @@ impl VendingMachine {
             let new_distribution_time = self.vm().block_timestamp();
 
             // Update the distribution time to the current time.
+            // let mut time_accessor = self.cupcake_distribution_times.setter(user_address);
+            // time_accessor.set(U256::from(new_distribution_time));
+            // return Ok(true);
             let mut time_accessor = self.cupcake_distribution_times.setter(user_address);
             time_accessor.set(Uint::<256, 4>::from(new_distribution_time));
-            return Ok(true);
+            return true;
         } else {
             // User must wait before receiving another cupcake.
             console!(
                 "HTTP 429: Too Many Cupcakes (you must wait at least 5 seconds between cupcakes)"
             );
-            return Ok(false);
+            return false;
         }
     }
 
     // Get the cupcake balance for the specified user.
-    pub fn get_cupcake_balance_for(&self, user_address: Address) -> Result<Uint<256, 4>, Vec<u8>> {
+    pub fn get_cupcake_balance_for(&self, user_address: Address) -> Result<U256, Vec<u8>> {
         // Return the user's cupcake balance from storage.
         Ok(self.cupcake_balances.get(user_address))
     }
 }
-
