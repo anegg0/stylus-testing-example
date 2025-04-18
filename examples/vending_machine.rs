@@ -27,11 +27,11 @@ async fn main() -> eyre::Result<()> {
     // Load environment variables from .env file
     dotenv().ok();
 
-    // Debugging: Print environment variables
-    println!("PRIVATE_KEY_PATH: {:?}", env::var(PRIVATE_KEY_PATH));
-    println!("RPC_URL: {:?}", env::var(RPC_URL));
-    println!("STYLUS_CONTRACT_ADDRESS: {:?}", env::var(STYLUS_CONTRACT_ADDRESS));
-    println!("USER_ADDRESS: {:?}", env::var(USER_ADDRESS));
+    // Log configuration (without exposing sensitive data)
+    println!("Configuration loaded from environment variables");
+    println!("RPC URL configured: {}", if env::var(RPC_URL).is_ok() { "Yes" } else { "No" });
+    println!("Contract address configured: {}", if env::var(STYLUS_CONTRACT_ADDRESS).is_ok() { "Yes" } else { "No" });
+    println!("User address configured: {}", if env::var(USER_ADDRESS).is_ok() { "Yes" } else { "No" });
 
     let priv_key_path = env::var(PRIVATE_KEY_PATH).map_err(|_| eyre!("No {} env var set", PRIVATE_KEY_PATH))?;
     let rpc_url = env::var(RPC_URL).map_err(|_| eyre!("No {} env var set", RPC_URL))?;
@@ -52,7 +52,7 @@ async fn main() -> eyre::Result<()> {
     let address: Address = contract_address.parse()?;
 
     let privkey = read_secret_from_file(&priv_key_path)?;
-    println!("Private key read from file: {}", privkey); // Debugging line
+    println!("Private key loaded from file successfully");
 
     let wallet = LocalWallet::from_str(&privkey)?;
     let chain_id = provider.get_chainid().await?.as_u64();
@@ -87,9 +87,16 @@ async fn main() -> eyre::Result<()> {
 }
 
 fn read_secret_from_file(fpath: &str) -> eyre::Result<String> {
-    let f = std::fs::File::open(fpath)?;
+    let f = std::fs::File::open(fpath).map_err(|e| eyre!("Failed to open private key file: {}", e))?;
     let mut buf_reader = BufReader::new(f);
     let mut secret = String::new();
-    buf_reader.read_line(&mut secret)?;
-    Ok(secret.trim().to_string())
+    buf_reader.read_line(&mut secret).map_err(|e| eyre!("Failed to read private key: {}", e))?;
+    
+    // Validate that we have a non-empty key
+    let trimmed = secret.trim().to_string();
+    if trimmed.is_empty() {
+        return Err(eyre!("Private key file is empty"));
+    }
+    
+    Ok(trimmed)
 }
