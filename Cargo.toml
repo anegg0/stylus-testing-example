@@ -31,10 +31,15 @@ path = "src/main.rs"
 [lib]
 crate-type = ["lib", "cdylib"]
 
+[profile.dev]
+opt-level = 0
+debug = false
+codegen-units = 16
+incremental = true
+
 [profile.release]
 codegen-units = 1
 strip = true
-lto = true
+lto = "thin"
 panic = "abort"
-
-opt-level = 3
+opt-level = "s"
