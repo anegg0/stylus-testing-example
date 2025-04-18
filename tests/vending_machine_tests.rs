@@ -5,13 +5,13 @@ use stylus_testing_example::VendingMachine;
 #[test]
 fn test_give_cupcake_to() {
     // Create a new TestVM
-    // let vm = TestVM::default();
-    let vm: TestVM = TestVMBuilder::new()
-        .sender(address!("dCE82b5f92C98F27F116F70491a487EFFDb6a2a9"))
-        .contract_address(address!("0x11b57fe348584f042e436c6bf7c3c3def171de49"))
-        .value(U256::from(1))
-        .rpc_url("http://localhost:8547")
-        .build();
+    let vm = TestVM::default();
+    // let vm: TestVM = TestVMBuilder::new()
+    //     .sender(address!("dCE82b5f92C98F27F116F70491a487EFFDb6a2a9"))
+    //     .contract_address(address!("0x11b57fe348584f042e436c6bf7c3c3def171de49"))
+    //     .value(U256::from(1))
+    //     .rpc_url("http://localhost:8547")
+    //     .build();
 
     // Initialize the contract with the VM
     let mut contract = VendingMachine::from(&vm);
@@ -23,7 +23,7 @@ fn test_give_cupcake_to() {
     assert_eq!(contract.get_cupcake_balance_for(user).unwrap(), U256::ZERO);
 
     // Give a cupcake and verify it succeeds
-    assert!(contract.give_cupcake_to(user).unwrap());
+    assert!(contract.give_cupcake_to(user));
 
     // Check balance is now 1
     assert_eq!(
@@ -32,7 +32,7 @@ fn test_give_cupcake_to() {
     );
 
     // Try to give another cupcake immediately - should fail due to time restriction
-    assert!(!contract.give_cupcake_to(user).unwrap());
+    assert!(!contract.give_cupcake_to(user));
 
     // Balance should still be 1
     assert_eq!(
@@ -44,7 +44,7 @@ fn test_give_cupcake_to() {
     vm.set_block_timestamp(vm.block_timestamp() + 6);
 
     // Now giving a cupcake should succeed
-    assert!(contract.give_cupcake_to(user).unwrap());
+    assert!(contract.give_cupcake_to(user));
 
     // Balance should now be 2
     assert_eq!(
